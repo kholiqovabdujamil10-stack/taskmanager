@@ -1,0 +1,17 @@
+{% extends 'basic.html' %}
+{% block title %}Edit Message{% endblock %}
+{% block content %}
+
+<div class="form-container">
+    <h1>Edit Message</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <textarea name="text" rows="5" required>{{ message.text }}</textarea>
+        <button type="submit" class="btn">Save Changes</button>
+    </form>
+
+    <p><a href="{% url 'chat' %}">Back to Chat</a></p>
+</div>
+
+{% endblock %}

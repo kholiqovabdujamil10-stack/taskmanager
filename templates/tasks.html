@@ -1,0 +1,38 @@
+{% extends 'basic.html' %}
+{% block title %}My Tasks{% endblock %}
+{% block content %}
+
+<div class="tasks-container">
+    <h1>My Tasks</h1>
+    <a href="{% url 'create_task' %}" class="btn">+ Create Task</a>
+
+    {% for task in tasks %}
+    <div class="task-card">
+        <h2>{{ task.title }}</h2>
+        <p>{{ task.description }}</p>
+        <p>Status: {{ task.get_status_display }}</p>
+        <p>Due: {{ task.due_date|default:"Not set" }}</p>
+
+        <a href="{% url 'edit_task' task.id %}" class="btn">Edit</a>
+
+        <form method="POST" action="{% url 'delete_task' task.id %}">
+            {% csrf_token %}
+            <button class="btn">Delete</button>
+        </form>
+
+        <form method="POST" action="{% url 'change_status' task.id %}">
+            {% csrf_token %}
+            <select name="status">
+                <option value="new" {% if task.status == 'new' %}selected{% endif %}>New</option>
+                <option value="in_progress" {% if task.status == 'in_progress' %}selected{% endif %}>In Progress</option>
+                <option value="completed" {% if task.status == 'completed' %}selected{% endif %}>Completed</option>
+            </select>
+            <button class="btn">Change Status</button>
+        </form>
+    </div>
+    {% empty %}
+    <p>No tasks yet.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

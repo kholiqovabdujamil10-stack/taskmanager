@@ -1,0 +1,36 @@
+{% extends 'basic.html' %}
+{% block title %}Global Chat{% endblock %}
+{% block content %}
+
+<div class="chat-container">
+    <h1>Global Chat</h1>
+
+    <div class="chat-box">
+        {% for message in messages %}
+        <div class="message">
+            <h4>{{ message.user.username }}</h4>
+            <p>{{ message.text }}</p>
+            <small>{{ message.created_at|date:"d.m.Y H:i" }}</small>
+
+            {% if message.user == request.user %}
+            <a href="{% url 'edit_message' message.id %}" class="btn">Edit</a>
+
+            <form method="POST" action="{% url 'delete_message' message.id %}">
+                {% csrf_token %}
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+            {% endif %}
+        </div>
+        {% empty %}
+        <p>No messages yet. Start the conversation!</p>
+        {% endfor %}
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        <textarea name="text" placeholder="Write a message..." rows="3" required></textarea>
+        <button type="submit" class="btn">Send Message</button>
+    </form>
+</div>
+
+{% endblock %}

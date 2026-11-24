@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Task Manager{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="container header-content">
+            <a href="{% url 'home' %}" class="logo">✦ TaskManager</a>
+
+            <nav class="nav">
+                <a href="{% url 'home' %}" class="nav-link">Home</a>
+
+                {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="nav-link">Profile</a>
+                <a href="{% url 'tasks' %}" class="nav-link">Tasks</a>
+                <a href="{% url 'chat' %}" class="nav-link">Chat</a>
+                <a href="{% url 'logout' %}" class="nav-link logout">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="nav-link">Login</a>
+                <a href="{% url 'registration' %}" class="nav-link">Register</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>✦ TaskManager © 2026 | Your Productivity Space</p>
+    </footer>
+</body>
+</html>

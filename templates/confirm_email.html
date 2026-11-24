@@ -1,0 +1,20 @@
+{% extends 'basic.html' %}
+{% block title %}Confirm Email{% endblock %}
+{% block content %}
+
+<div class="form-container">
+    <h1>Confirm Your Email</h1>
+
+    <p>Enter your username and the confirmation code sent to your email.</p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <input type="text" name="username" placeholder="Username" required>
+
+        <input type="text" name="code" placeholder="Confirmation Code" maxlength="6" required>
+
+        <button type="submit" class="btn">Confirm</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'basic.html' %}
+{% block title %}Create Task{% endblock %}
+{% block content %}
+
+<div class="form-container">
+    <h1>Create New Task</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <input type="text" name="title" placeholder="Task Title" required>
+
+        <textarea name="description" placeholder="Task Description" rows="5"></textarea>
+
+        <label>Due Date</label>
+        <input type="datetime-local" name="due_date">
+
+        <button type="submit" class="btn">Create Task</button>
+    </form>
+
+    <p><a href="{% url 'tasks' %}">Back to Tasks</a></p>
+</div>
+{% endblock %}
